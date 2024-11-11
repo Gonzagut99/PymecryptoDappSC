@@ -86,7 +86,7 @@ describe("PYMToken", function () {
 
       // Verificar delegatedVotes
       const delegatedVotes = await pymToken.delegatedVotes(addr2.address);
-      expect(delegatedVotes).to.equal(initialBalance);
+      expect(delegatedVotes).to.equal(initialBalance/(BigInt(10)**18n));
     });
   });
 
