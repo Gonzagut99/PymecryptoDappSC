@@ -101,4 +101,17 @@ describe("PYMToken", function () {
       expect(await pymToken.balanceOf(addr2.address)).to.equal(amounts[1]);
     });
   });
+
+  describe("Funciones de Consulta", () => {
+    it("Debería devolver todas las propuestas", async function () {
+      await pymToken.connect(owner).createProposal("Test Proposal 1");
+      await pymToken.connect(owner).createProposal("Test Proposal 2");
+      await pymToken.connect(owner).createProposal("Test Proposal 3");
+
+      const allProposals = await pymToken.getAllProposals();
+      console.log(allProposals);
+      expect(allProposals.length).to.equal(3);
+    });
+  });
+
 });

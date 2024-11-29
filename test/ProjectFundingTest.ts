@@ -77,4 +77,48 @@ describe("ProjectFunding", function () {
         .to.be.revertedWith("El monto excede la meta de financiamiento");
     });
   });
+
+  // describe("Retiro de Fondos", () => {
+  //   beforeEach(async function () {
+  //     await pymToken.connect(addr1).approve(await projectFunding.getAddress(), MIN_PYM_FOR_PROJECT_CREATION);
+  //     await projectFunding.connect(addr1).createProject("Proyecto 1", addr1.address, FUNDING_GOAL);
+  //   });
+
+  //   it("Debería permitir retirar fondos si el proyecto ha sido financiado", async function () {
+  //     await pymToken.transfer(addr2.address, FUNDING_GOAL);
+  //     await pymToken.connect(addr2).approve(await projectFunding.getAddress(), FUNDING_GOAL);
+  //     await projectFunding.connect(addr2).fundProjectWithPYM(0, FUNDING_GOAL);
+
+  //     await expect(projectFunding.connect(addr1).withdrawFunds(0))
+  //       .to.emit(projectFunding, "FundsWithdrawn")
+  //       .withArgs(0, FUNDING_GOAL);
+  //   });
+
+  //   it("Debería revertir si el proyecto no ha sido financiado", async function () {
+  //     await expect(projectFunding.connect(addr1).withdrawFunds(0))
+  //       .to.be.revertedWith("El proyecto no ha sido financiado");
+  //   });
+
+  //   it("Debería revertir si el que intenta retirar no es el creador del proyecto", async function () {
+  //     await pymToken.transfer(addr2.address, FUNDING_GOAL);
+  //     await pymToken.connect(addr2).approve(projectFunding.getAddress(), FUNDING_GOAL);
+  //     await projectFunding.connect(addr2).fundProjectWithPYM(0, FUNDING_GOAL);
+
+  //     await expect(projectFunding.connect(addr2).withdrawFunds(0))
+  //       .to.be.revertedWith("Solo el creador del proyecto puede retirar los fondos");
+  //   });
+  // });
+
+  describe("Funciones de Consulta", () => {
+    it("Debería devolver todos los proyectos", async function () {
+      await pymToken.connect(addr1).approve(await projectFunding.getAddress(), MIN_PYM_FOR_PROJECT_CREATION);
+      await projectFunding.connect(addr1).createProject("Proyecto 1", addr1.address, FUNDING_GOAL);
+      await projectFunding.connect(addr1).createProject("Proyecto 2", addr1.address, FUNDING_GOAL);
+
+      const projects = await projectFunding.getAllProjects();
+      expect(projects.length).to.equal(2);
+    });
+  });
+
+
 });

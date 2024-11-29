@@ -23,6 +23,7 @@ contract ProjectFunding is Ownable {
 
     event ProjectCreated(uint256 id, string name, address recipient, uint256 fundingGoal);
     event ProjectFunded(uint256 id, uint256 amount);
+    event FundsWithdrawn(uint256 id, uint256 amount);
 
     constructor(address _pymTokenAddress) Ownable(msg.sender) {
         pymToken = PYMToken(_pymTokenAddress);
@@ -58,5 +59,25 @@ contract ProjectFunding is Ownable {
         }
 
         emit ProjectFunded(projectId, amount);
+    }
+
+    // function withdrawFunds(uint256 projectId) external {
+    //     Project storage project = projects[projectId];
+    //     require(project.funded, "El proyecto no ha sido financiado");
+    //     require(msg.sender == project.recipient, "Solo el creador del proyecto puede retirar los fondos");
+
+    //     uint256 amount = project.fundsRaised;
+    //     project.fundsRaised = 0;
+    //     pymToken.transfer(project.recipient, amount);
+
+    //     emit FundsWithdrawn(projectId, amount);
+    // }
+
+    function getAllProjects() external view returns (Project[] memory) {
+        Project[] memory _projects = new Project[](projectCount);
+        for (uint256 i = 0; i < projectCount; i++) {
+            _projects[i] = projects[i];
+        }
+        return _projects;
     }
 }

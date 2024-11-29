@@ -115,4 +115,13 @@ contract PYMToken is ERC20, Ownable {
             _transfer(address(this), recipients[i], amounts[i]);
         }
     }
+
+    // Nueva función para obtener todas las propuestas
+    function getAllProposals() external view returns (Proposal[] memory) {
+        Proposal[] memory allProposals = new Proposal[](proposalCount);
+        for (uint256 i = 0; i < proposalCount; i++) {
+            allProposals[i] = proposals[i];
+        }
+        return allProposals;
+    }
 }
